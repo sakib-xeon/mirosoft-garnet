@@ -47,7 +47,7 @@ jobs:
     runs-on: ${{ matrix.os }}
     strategy:
       matrix:
-        os: [ ubuntu-latest, windows-latest ]
+        os: [ ubuntu, windows ]
         framework: [ 'net6.0', 'net8.0' ]
         configuration: [ 'Debug', 'Release' ]
     steps:
