@@ -116,7 +116,7 @@ namespace Tsavorite.core
         {
             var pcontext = new PendingContext<Input, Output, Context> { IsAsync = true };
             var diskRequest = default(AsyncIOContext<Key, Value>);
-            var DELETETHIS = 5;
+            var DELETETHIS = 7;
 
             tsavoriteSession.UnsafeResumeThread();
             try
