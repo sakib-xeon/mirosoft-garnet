@@ -43,7 +43,7 @@ jobs:
   
   # Job to build and test Garnet code
   build-test-garnet:
-    name: Test
+    name: Garnet
     runs-on: ${{ matrix.os }}
     strategy:
       matrix:
@@ -72,7 +72,7 @@ jobs:
 
   # Job to build and test Tsavorite code (only if there were changes to it)
   build-test-tsavorite:        
-    name: Test
+    name: Tsavorite
     needs: changes
     runs-on: ${{ matrix.os }}
     strategy:
