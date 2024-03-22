@@ -43,12 +43,13 @@ jobs:
   
   # Job to build and test Garnet code
   build-test-garnet:
-    name: Garnet - Build and Test
+    name: Build and Test
     runs-on: ${{ matrix.os }}
     strategy:
       matrix:
         os: [ ubuntu-latest, windows-latest ]
         framework: [ 'net6.0', 'net8.0' ]
+        configuration: [ 'Debug', 'Release' ]
     steps:
       - name: Check out code
         uses: actions/checkout@v4
@@ -59,19 +60,19 @@ jobs:
       - name: Install dependencies
         run: dotnet restore
       - name: Build Garnet
-        run: dotnet build
+        run: dotnet build --configuration ${{ matrix.configuration }}
       - name: Test Garnet
-        run: dotnet test -f ${{ matrix.framework }} --logger "console;verbosity=detailed" --logger trx --results-directory "GarnetTestResults-${{ matrix.os }}-${{ matrix.framework }}"
+        run: dotnet test -f ${{ matrix.framework }} --logger "console;verbosity=detailed" --logger trx --results-directory "GarnetTestResults-${{ matrix.os }}-${{ matrix.framework }}-${{ matrix.configuration }}"
       - name: Upload test results
         uses: actions/upload-artifact@v4
         with:
-          name: dotnet-garnet-results-${{ matrix.os }}-${{ matrix.framework }}
-          path: GarnetTestResults-${{ matrix.os }}-${{ matrix.framework }}
+          name: dotnet-garnet-results-${{ matrix.os }}-${{ matrix.framework }}-${{ matrix.configuration }}
+          path: GarnetTestResults-${{ matrix.os }}-${{ matrix.framework }}-${{ matrix.configuration }}
         if: ${{ always() }}
 
   # Job to build and test Tsavorite code (only if there were changes to it)
   build-test-tsavorite:        
-    name: Tsavorite - Build and Test
+    name: Build and Test
     needs: changes
     runs-on: ${{ matrix.os }}
     strategy:
